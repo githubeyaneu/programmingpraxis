@@ -46,6 +46,20 @@ import org.junit.Test;
  */
 public class LongestSubsequence
 {
+    @Test
+    public void testLongestSubsequence() throws Exception
+    {
+        assertThat(longestSubsequence(newArrayList(3, 2, 6, 4, 5, 1))).containsOnly(newArrayList(2, 4, 5), newArrayList(3, 4, 5));
+        assertThat(longestSubsequence(newArrayList(11, 9, 5, 4, 7, 3, 1))).containsOnly(newArrayList(5, 7), newArrayList(4, 7));
+        assertThat(longestSubsequence(newArrayList())).containsOnly(newArrayList());
+        assertThat(longestSubsequence(newArrayList(1))).containsOnly(newArrayList(1));
+        assertThat(longestSubsequence(newArrayList(1, -1))).containsOnly(newArrayList(1), newArrayList(-1));
+        assertThat(longestSubsequence(newArrayList(1, 2))).containsOnly(newArrayList(1, 2));
+        assertThat(longestSubsequence(newArrayList(1, 1))).containsOnly(newArrayList(1));
+        assertThat(longestSubsequence(newArrayList(1, 1, 2))).containsOnly(newArrayList(1, 2));
+        assertThat(longestSubsequence(newArrayList(1, 9, 2, 2, 3))).containsOnly(newArrayList(1, 2, 3));
+    }
+
     public static List<List<Integer>> longestSubsequence(List<Integer> sequence)
     {
         List<Stack<ObjectWithPointer<Integer>>> stacks = newArrayList();
@@ -103,20 +117,6 @@ public class LongestSubsequence
             nextSubsequence.add(objectWithPointer);
             findLongestSubsequences(stacks, longestSubseqeunces, nextSubsequence);
         }
-    }
-
-    @Test
-    public void testLongestSubsequence() throws Exception
-    {
-        assertThat(longestSubsequence(newArrayList(3, 2, 6, 4, 5, 1))).containsOnly(newArrayList(2, 4, 5), newArrayList(3, 4, 5));
-        assertThat(longestSubsequence(newArrayList(11, 9, 5, 4, 7, 3, 1))).containsOnly(newArrayList(5, 7), newArrayList(4, 7));
-        assertThat(longestSubsequence(newArrayList())).containsOnly(newArrayList());
-        assertThat(longestSubsequence(newArrayList(1))).containsOnly(newArrayList(1));
-        assertThat(longestSubsequence(newArrayList(1, -1))).containsOnly(newArrayList(1), newArrayList(-1));
-        assertThat(longestSubsequence(newArrayList(1, 2))).containsOnly(newArrayList(1, 2));
-        assertThat(longestSubsequence(newArrayList(1, 1))).containsOnly(newArrayList(1));
-        assertThat(longestSubsequence(newArrayList(1, 1, 2))).containsOnly(newArrayList(1, 2));
-        assertThat(longestSubsequence(newArrayList(1, 9, 2, 2, 3))).containsOnly(newArrayList(1, 2, 3));
     }
 
     private static class ObjectWithPointer<O>
