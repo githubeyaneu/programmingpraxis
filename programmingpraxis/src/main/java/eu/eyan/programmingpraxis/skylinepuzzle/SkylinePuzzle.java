@@ -6,6 +6,8 @@ import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+
 import org.junit.Test;
 
 /**
@@ -72,18 +74,12 @@ public class SkylinePuzzle
         return result;
     }
 
+    @AllArgsConstructor
     public static class Building
     {
         private int start;
         private int height;
         private int end;
-
-        public Building(int start, int height, int end)
-        {
-            this.start = start;
-            this.height = height;
-            this.end = end;
-        }
 
         static Building building(int start, int height, int end)
         {
