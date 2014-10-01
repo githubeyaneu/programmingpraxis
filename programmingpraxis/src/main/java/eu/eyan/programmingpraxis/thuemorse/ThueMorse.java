@@ -31,16 +31,28 @@ public class ThueMorse {
 
     @Test
     public void testThueMorse() throws Exception {
-        assertThat(thueMorse(0)).isEqualTo("0");
-        assertThat(thueMorse(1)).isEqualTo("01");
-        assertThat(thueMorse(2)).isEqualTo("0110");
-        assertThat(thueMorse(3)).isEqualTo("01101001");
-        assertThat(thueMorse(4)).isEqualTo("0110100110010110");
-        System.out.println(thueMorse(6));
+        assertThat(thueMorseSimple(0)).isEqualTo("0");
+        assertThat(thueMorseSimple(1)).isEqualTo("01");
+        assertThat(thueMorseSimple(2)).isEqualTo("0110");
+        assertThat(thueMorseSimple(3)).isEqualTo("01101001");
+        assertThat(thueMorseSimple(4)).isEqualTo("0110100110010110");
+        System.out.println(thueMorseSimple(6));
+
+        assertThat(thueMorseSmart(0)).isEqualTo("0");
+        assertThat(thueMorseSmart(1)).isEqualTo("01");
+        assertThat(thueMorseSmart(2)).isEqualTo("0110");
+        assertThat(thueMorseSmart(3)).isEqualTo("01101001");
+        assertThat(thueMorseSmart(4)).isEqualTo("0110100110010110");
     }
 
-    private static String thueMorse(int term) {
-        return term == 0 ? "0" : thueMorse(term - 1)
-            + thueMorse(term - 1).replaceAll("0", "x").replaceAll("1", "0").replaceAll("x", "1");
+    private static String thueMorseSimple(int term) {
+        return term == 0 ? "0" : thueMorseSimple(term - 1)
+            + thueMorseSimple(term - 1).replaceAll("0", "x").replaceAll("1", "0").replaceAll("x", "1");
+    }
+
+    private static String thueMorseSmart(int term) {
+        return term == 0 ? "0" : thueMorseSmart(term - 1).replaceAll("0", "x")
+                                                         .replaceAll("1", "10")
+                                                         .replaceAll("x", "01");
     }
 }
