@@ -9,8 +9,8 @@ import eu.eyan.programmingpraxis.crackerbarrel.game.IStep;
 @EqualsAndHashCode()
 @AllArgsConstructor(staticName = "step")
 @ToString(includeFieldNames = false)
-public class Step implements IStep
-{
+public class Step implements IStep {
+
     @Getter
     private int from;
 
