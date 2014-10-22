@@ -22,23 +22,23 @@ import com.google.common.collect.Lists;
  * use it to find the ten-thousandth palindromic number.
  * 
  */
-public class GeneratingPalindromes
-{
+public class GeneratingPalindromes {
+
+    private static boolean isPalindrom(String string) {
+        return string.equals(new StringBuilder(string).reverse().toString());
+    }
 
     @Test
-    public void testPalindomGeneratorDummy() throws Exception
-    {
+    public void testPalindomGeneratorDummy() throws Exception {
         assertPalindromes(generatePalindromesDummy(10000));
     }
 
     @Test
-    public void testPalindomGeneratorSmart() throws Exception
-    {
+    public void testPalindomGeneratorSmart() throws Exception {
         assertPalindromes(generatePalindromesSmart(10000));
     }
 
-    private void assertPalindromes(List<Integer> palindromes)
-    {
+    private void assertPalindromes(List<Integer> palindromes) {
         assertThat(palindromes).hasSize(10000);
         assertThat(palindromes.get(1 - 1)).isEqualTo(0);
         assertThat(palindromes.get(2 - 1)).isEqualTo(1);
@@ -51,15 +51,12 @@ public class GeneratingPalindromes
         assertThat(palindromes.get(10000 - 1)).isEqualTo(9000009);
     }
 
-    public static List<Integer> generatePalindromesDummy(int number)
-    {
+    public static List<Integer> generatePalindromesDummy(int number) {
         List<Integer> palindromes = Lists.newArrayList();
         int counter = 0;
-        while (palindromes.size() < number)
-        {
+        while (palindromes.size() < number) {
             String counterString = String.valueOf(counter);
-            if (counterString.equals(new StringBuilder(counterString).reverse().toString()))
-            {
+            if (isPalindrom(counterString)) {
                 palindromes.add(counter);
             }
             counter++;
@@ -67,39 +64,30 @@ public class GeneratingPalindromes
         return palindromes;
     }
 
-    public static List<Integer> generatePalindromesSmart(int number)
-    {
+    public static List<Integer> generatePalindromesSmart(int number) {
         List<Integer> palindromes = Lists.newArrayList();
 
         int counter = 0;
         int digits = 1;
         boolean lastIncludedInMirror = true;
 
-        while (palindromes.size() < number)
-        {
+        while (palindromes.size() < number) {
             String counterString = String.valueOf(counter);
             String palindrome;
-            if (lastIncludedInMirror)
-            {
+            if (lastIncludedInMirror) {
                 palindrome =
-                        counterString
-                                + new StringBuilder(counterString.substring(0, counterString.length() - 1)).reverse()
-                                        .toString();
-            }
-            else
-            {
+                    counterString
+                        + new StringBuilder(counterString.substring(0, counterString.length() - 1)).reverse()
+                                                                                                   .toString();
+            } else {
                 palindrome = counterString + new StringBuilder(counterString).reverse().toString();
             }
             palindromes.add(Integer.valueOf(palindrome));
             counter++;
-            if (String.valueOf(counter).length() > digits)
-            {
-                if (lastIncludedInMirror)
-                {
+            if (String.valueOf(counter).length() > digits) {
+                if (lastIncludedInMirror) {
                     counter = counter / 10;
-                }
-                else
-                {
+                } else {
                     digits++;
                 }
                 lastIncludedInMirror = !lastIncludedInMirror;

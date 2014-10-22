@@ -139,6 +139,10 @@ public class TextFormatter {
             return formatted;
         }
 
+        private String justify(String paragraph) {
+            return "";
+        }
+
         @Override
         public void flush() throws IOException {
             writer.write(format(sb.toString()));
