@@ -63,12 +63,36 @@ public class TwoBasePalindromes {
         }
     }
 
+    @Test
+    public void testSpeed() throws Exception {
+        Palindromgenerator generator2 = new Palindromgenerator(2);
+        Palindromgenerator generator10 = new Palindromgenerator(10);
+        Palindromgenerator generator18 = new Palindromgenerator(18);
+        for (int i = 0; i < 10000000; i++) {
+            generator2.nextInDecimal();
+            generator10.nextInDecimal();
+            generator18.nextInDecimal();
+        }
+        System.out.println(generator2.next().equals("101100010010110100000010000001011010010001101"));
+        System.out.println(generator10.next().equals("9000001000009"));
+        System.out.println(generator18.next().equals("454c3b3c454"));
+
+        // orig speed: 30s
+        //        101100010010110100000010000001011010010001101
+        //        9000001000009
+        //        454c3b3c454
+
+        // no String valueOf: 29s
+        // no new StringBuilder: 30s
+    }
+
     public static class Palindromgenerator {
 
         private final int radix;
         private String counter = "0";
         private int digits = 1;
         private boolean lastIncludedInMirror = true;
+        private final StringBuilder sb = new StringBuilder();
 
         Palindromgenerator(int radix) {
             this.radix = radix;
@@ -79,18 +103,14 @@ public class TwoBasePalindromes {
         }
 
         public String next() {
-            String counterString = String.valueOf(counter);
             String palindrome;
             if (lastIncludedInMirror) {
-                palindrome =
-                    counterString
-                        + new StringBuilder(counterString.substring(0, counterString.length() - 1)).reverse()
-                                                                                                   .toString();
+                palindrome = counter + reverse(counter.substring(0, digits - 1));
             } else {
-                palindrome = counterString + new StringBuilder(counterString).reverse().toString();
+                palindrome = counter + reverse(counter);
             }
             counter = decToRad(radToDec(counter) + 1L);
-            if (String.valueOf(counter).length() > digits) {
+            if (counter.length() > digits) {
                 if (lastIncludedInMirror) {
                     counter = decToRad(radToDec(counter) / radix);
                 } else {
@@ -99,6 +119,12 @@ public class TwoBasePalindromes {
                 lastIncludedInMirror = !lastIncludedInMirror;
             }
             return palindrome;
+        }
+
+        private String reverse(String substring) {
+            sb.setLength(0);
+            sb.append(substring);
+            return sb.reverse().toString();
         }
 
         private Long radToDec(String rad) {
