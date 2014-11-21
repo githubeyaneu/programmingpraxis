@@ -10,4 +10,5 @@ class GaussianInteger(val a: Int, val b: Int) {
   }
   def remainder(that: GaussianInteger): GaussianInteger = subtraction(quotient(that))
   override def toString: String = a + " + " + b + "i"
+
 }
