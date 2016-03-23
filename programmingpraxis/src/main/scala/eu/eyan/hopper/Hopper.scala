@@ -13,7 +13,7 @@ object Hopper extends App {
     if (valuesFromFile.isEmpty) "faliure"
     else {
       val first = valuesFromFile.next()
-      hopper(valuesFromFile, List(0), first, 0, first, 0)
+      hopperRec(valuesFromFile, List(0), first, 0, first, 0)
     }
   }
 
@@ -21,33 +21,32 @@ object Hopper extends App {
     if (input.isEmpty) "faliure"
     else {
       val first = input.next()
-      hopper(input, List(0), first, 0, first, 0)
+      hopperCheckNewCandidate(input, List(0), first, 0, first, 0)
     }
-    
   }
-  
-  def hopper(input: Iterator[Int], bestRoute: List[Int], bestRouteMax: Int, index: Int, maxCandidate: Int, candidateIndex: Int): String = {
+  def hopperCheckNewCandidate(input: Iterator[Int], bestRoute: List[Int], bestRouteMax: Int, index: Int, maxCandidate: Int, candidateIndex: Int): String = {
+    ""
+  }
+
+  def hopperRec(input: Iterator[Int], bestRoute: List[Int], bestRouteMax: Int, index: Int, maxCandidate: Int, candidateIndex: Int): String = {
     Thread.sleep(1000)
     println(bestRoute + " | " + bestRouteMax + "      " + index + "  " + (maxCandidate, candidateIndex))
     if (!input.hasNext) {
       println("nonext")
       if (index <= bestRouteMax) (bestRoute ++ List("opt")).mkString(", ")
       else "failure"
-    } 
-    else if (bestRouteMax == index) {
+    } else if (bestRouteMax == index) {
       println("osszegzes")
-      hopper(input, bestRoute ++ List(candidateIndex), maxCandidate, index, maxCandidate, candidateIndex)
-    }
-    else {
-    	println("kovi")
+      hopperRec(input, bestRoute ++ List(candidateIndex), maxCandidate, index, maxCandidate, candidateIndex)
+    } else {
+      println("kovi")
       val nextValue = input.next
-      if (maxCandidate <= index + 1 + nextValue){
-    	  println("uj kandidans")
-        hopper(input, bestRoute, bestRouteMax, index + 1, nextValue, index+1)
-      }
-      else {
-    	  println("kovetkezo elem uj kandidans nelkul")
-        hopper(input, bestRoute, bestRouteMax, index + 1, maxCandidate, candidateIndex)
+      if (maxCandidate <= index + 1 + nextValue) {
+        println("uj kandidans")
+        hopperRec(input, bestRoute, bestRouteMax, index + 1, nextValue, index + 1)
+      } else {
+        println("kovetkezo elem uj kandidans nelkul")
+        hopperRec(input, bestRoute, bestRouteMax, index + 1, maxCandidate, candidateIndex)
       }
     }
   }
@@ -70,13 +69,80 @@ object Hopper extends App {
   //0,1,6,7 | 8 
   //0,1,6,8 | -> ready
 
+  def hopperFileRecursive(fileName: String): String = {
+    println( (0 until Source.fromFile(fileName).getLines().size).mkString(", "))
+    println(Source.fromFile(fileName).getLines().map { line => line.toInt }.mkString(", "))
+    val input = Source.fromFile(fileName).getLines().map { line => line.toInt }
+    if (input.isEmpty) "failure"
+    else {
+      val first = input.next
+      hopperRecursive(input, List(0), first, 0, first, 0)
+    }
+  }
+
+  def hopperRecursive(input: Iterator[Int], route: List[Int], max: Int, index: Int, maxCand: Int, maxCandIndex: Int): String = {
+    println((route, "max="+max, "index="+index, "maxCand="+maxCand, "maxCandIndex="+maxCandIndex))
+    if (input.nonEmpty) {
+      val next = input.next
+
+      if (maxCand <= next + index + 1)
+        if (max == index + 1)
+          if (maxCand <= index + 1) "failure"
+          else hopperRecursive(input, route ++ List(maxCandIndex), maxCand, index + 1, next + index + 1, index + 1)
+        else hopperRecursive(input, route, max, index + 1, next + index + 1, index + 1)
+      else if (max == index + 1)
+        if (maxCand <= index + 1) "failure"
+        else hopperRecursive(input, route ++ List(maxCandIndex), maxCand, index + 1, maxCand, maxCandIndex)
+      else hopperRecursive(input, route, max, index + 1, maxCand, maxCandIndex)
+    } else if (index < max) (route ++ List("opt")).mkString(" ,")
+    else "failure"
+  }
+
+  def hopperFile(fileName: String): String = hopper(Source.fromFile(fileName).getLines().map { line => line.toInt })
+  def hopper(input: Iterator[Int]): String = {
+    if (input.isEmpty) "failure"
+    else {
+      var route = List(0)
+      var max = input.next
+      var index = 0
+
+      var maxCand = max
+      var maxCandIndex = index
+      while (input.hasNext) {
+        val next = input.next
+        index += 1
+
+        if (maxCand <= next + index) {
+          maxCand = next + index
+          maxCandIndex = index
+        }
+
+        if (max == index) {
+          route = route ++ List(maxCandIndex)
+          max = maxCand
+          maxCandIndex = maxCandIndex
+
+          if (maxCand <= index) return "failure"
+        }
+      }
+
+      if (index < max) (route ++ List("opt")).mkString(" ,")
+      else "failure"
+    }
+  }
+
   override def main(args: Array[String]) {
     //println("eredmeny: "+ hopper(List().iterator, List(), -1,0,0,0)  )
 
-//    println("eredmeny: " + hopperStart(List(1).iterator))
-//    println("eredmeny: " + hopperStart(List(4, 5, 1, 1, 0, 3, 2, 1).iterator))
-    println("eredmeny: " + hopperStart(List(4, 5, 1, 1, 0, 3, 2, 1).iterator))
+    //    println("eredmeny: " + hopperStart(List(1).iterator))
+    //    println("eredmeny: " + hopperStart(List(4, 5, 1, 1, 0, 3, 2, 1).iterator))
+    //    println("eredmeny: " + hopperStart(List(4, 5, 1, 1, 0, 3, 2, 1).iterator))
+    //    println("eredmeny: " + hopper(List().iterator))
+    //    println("eredmeny: " + hopper(List(0).iterator))
+    //    println("eredmeny: " + hopper(List(1).iterator))
+    //    println("eredmeny: " + hopper(List(4, 5, 1, 1, 0, 3, 2, 1).iterator))
 
+    println(hopperRecursive(List( /*4, */ 5, 1, 1, 0, 3, 2, 1).iterator, List(0), 4, 0, 4, 0))
     //hopper(List(4, 5, 1, 1, 0, 3, 2, 1).iterator, List(), -1, 0, 0, 0)
 
     //    println(hopper(List(1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1).iterator))
