@@ -46,10 +46,9 @@ public class Expand_It {
 		return k <= t.size() ? t.get(k - 1) : "-1";
 	}
 
-	static String Expand_It_6_bad(String s, int k) {
-		long[] l = new long[28];
+	long l[] = new long[28], x;
+	String Expand_It_6(String s, int k) {
 		char c = 97;
-		long x = 0;
 
 		for (char d : (s+"x").toCharArray())
 			if (d > 58) {
