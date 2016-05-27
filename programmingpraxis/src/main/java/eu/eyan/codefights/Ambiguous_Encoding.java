@@ -2,9 +2,6 @@ package eu.eyan.codefights;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Test;
 
 public class Ambiguous_Encoding {
