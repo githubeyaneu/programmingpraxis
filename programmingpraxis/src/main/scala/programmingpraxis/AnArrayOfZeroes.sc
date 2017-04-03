@@ -20,6 +20,7 @@ object AnArrayOfZeroes {
  */
   
   val orig = Array(1, 0, 2, 0, 0, 3, 4)           //> orig  : Array[Int] = Array(1, 0, 2, 0, 0, 3, 4)
+  orig.filter { _>2 }                             //> res0: Array[Int] = Array(3, 4)
   val expected = Array(1, 2, 3, 4, 0, 0, 0)       //> expected  : Array[Int] = Array(1, 2, 3, 4, 0, 0, 0)
   
   def sortZeroes(in: Array[Int]):Array[Int] = {
@@ -27,7 +28,7 @@ object AnArrayOfZeroes {
   	
   }                                               //> sortZeroes: (in: Array[Int])Array[Int]
   
-  sortZeroes(orig)                                //> res0: Array[Int] = Array(1, 2, 3, 4, 0, 0, 0)
+  sortZeroes(orig)                                //> res1: Array[Int] = Array(1, 2, 3, 4, 0, 0, 0)
   
   assert(expected.sameElements(sortZeroes(orig)))
 }
