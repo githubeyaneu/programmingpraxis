@@ -3,7 +3,6 @@ package eu.eyan.codefights;
 import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.TreeMap;
@@ -32,7 +31,7 @@ public class Expand_It {
 	 * 
 	 * The kth letter of the decompressed string, or "-1" if it does not exist.
 	 */
-	static String Expand_It(String s, int k) {
+	static String ExpandIt(String s, int k) {
 		List<String> t = new ArrayList<String>();
 
 		Matcher m = Pattern.compile("[a-z]\\d*").matcher(s);
@@ -166,26 +165,26 @@ public class Expand_It {
 
 	@Test
 	public void testName() throws Exception {
-		assertThat(Expand_It("a2b3c2a1", 1)).isEqualTo("a");
-		assertThat(Expand_It("a2b3c2a1", 2)).isEqualTo("a");
-		assertThat(Expand_It("a2b3c2a1", 3)).isEqualTo("a");
-		assertThat(Expand_It("a2b3c2a1", 4)).isEqualTo("b");
-		assertThat(Expand_It("a2b3c2a1", 5)).isEqualTo("b");
-		assertThat(Expand_It("a2b3c2a1", 6)).isEqualTo("b");
-		assertThat(Expand_It("a2b3c2a1", 7)).isEqualTo("c");
-		assertThat(Expand_It("a2b3c2a1", 8)).isEqualTo("c");
-		assertThat(Expand_It("a2b3c2a1", 9)).isEqualTo("-1");
+		assertThat(ExpandIt("a2b3c2a1", 1)).isEqualTo("a");
+		assertThat(ExpandIt("a2b3c2a1", 2)).isEqualTo("a");
+		assertThat(ExpandIt("a2b3c2a1", 3)).isEqualTo("a");
+		assertThat(ExpandIt("a2b3c2a1", 4)).isEqualTo("b");
+		assertThat(ExpandIt("a2b3c2a1", 5)).isEqualTo("b");
+		assertThat(ExpandIt("a2b3c2a1", 6)).isEqualTo("b");
+		assertThat(ExpandIt("a2b3c2a1", 7)).isEqualTo("c");
+		assertThat(ExpandIt("a2b3c2a1", 8)).isEqualTo("c");
+		assertThat(ExpandIt("a2b3c2a1", 9)).isEqualTo("-1");
 
-		assertThat(Expand_It("", 1)).isEqualTo("-1");
-		// assertThat(Expand_It("a", 1)).isEqualTo("-1");
-		assertThat(Expand_It("a1", 1)).isEqualTo("a");
-		assertThat(Expand_It("a01", 1)).isEqualTo("a");
-		assertThat(Expand_It("a01", 2)).isEqualTo("-1");
-		assertThat(Expand_It("a01a123", 2)).isEqualTo("a");
+		assertThat(ExpandIt("", 1)).isEqualTo("-1");
+		// assertThat(ExpandIt("a", 1)).isEqualTo("-1");
+		assertThat(ExpandIt("a1", 1)).isEqualTo("a");
+		assertThat(ExpandIt("a01", 1)).isEqualTo("a");
+		assertThat(ExpandIt("a01", 2)).isEqualTo("-1");
+		assertThat(ExpandIt("a01a123", 2)).isEqualTo("a");
 
-		assertThat(Expand_It("a01z00001", 1)).isEqualTo("a");
-		assertThat(Expand_It("a01z00001", 2)).isEqualTo("z");
-		assertThat(Expand_It("a01z00001a1", 2)).isEqualTo("a");
+		assertThat(ExpandIt("a01z00001", 1)).isEqualTo("a");
+		assertThat(ExpandIt("a01z00001", 2)).isEqualTo("z");
+		assertThat(ExpandIt("a01z00001a1", 2)).isEqualTo("a");
 	}
 
 }
